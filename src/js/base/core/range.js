@@ -527,6 +527,21 @@ class WrappedRange {
     return node;
   }
 
+  insertParagraphNode(node) {
+    const rng = this.wrapBodyInlineWithPara().deleteContents();
+    const info = dom.splitPoint(rng.getStartPoint(), dom.isInline(node));
+
+    /*
+    if (info.rightNode) {
+      info.rightNode.parentNode.insertBefore(node, info.rightNode);
+    } else {
+    */
+    info.container.appendChild(node);
+    // }
+
+    return node;
+  }
+
   /**
    * insert html at current cursor
    */
