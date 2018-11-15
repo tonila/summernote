@@ -20,8 +20,8 @@ const statusbar = renderer.create([
 
 const airEditor = renderer.create('<div class="note-editor"/>');
 const airEditable = renderer.create([
-  '<output class="note-status-output" aria-live="polite"/>',
-  '<div class="note-editable" contentEditable="true" role="textbox" aria-multiline="true"/>'
+  '<div class="note-editable" contentEditable="true" role="textbox" aria-multiline="true"/>',
+  '<output class="note-status-output" aria-live="polite"/>'
 ].join(''));
 
 const buttonGroup = renderer.create('<div class="note-btn-group btn-group">');
@@ -37,7 +37,7 @@ const dropdown = renderer.create('<div class="dropdown-menu" role="list">', func
     return '<a class="dropdown-item" href="#" ' + (dataValue + dataOption) + ' role="listitem" aria-label="' + item + '">' + content + '</a>';
   }).join('') : options.items;
 
-  $node.html(markup).attr({'aria-label': options.title});
+  $node.html(markup).attr({ 'aria-label': options.title });
 });
 
 const dropdownButtonContents = function(contents) {
@@ -50,7 +50,7 @@ const dropdownCheck = renderer.create('<div class="dropdown-menu note-check" rol
     const content = options.template ? options.template(item) : item;
     return '<a class="dropdown-item" href="#" data-value="' + value + '" role="listitem" aria-label="' + item + '">' + icon(options.checkClassName) + ' ' + content + '</a>';
   }).join('') : options.items;
-  $node.html(markup).attr({'aria-label': options.title});
+  $node.html(markup).attr({ 'aria-label': options.title });
 });
 
 const palette = renderer.create('<div class="note-color-palette"/>', function($node, options) {
@@ -126,14 +126,14 @@ const popover = renderer.create([
   }
 });
 
-const checkbox = renderer.create('<div class="custom-control custom-checkbox"></div>', function($node, options) {
+const checkbox = renderer.create('<div class="form-check"></div>', function($node, options) {
   $node.html([
-    '<input role="checkbox" type="checkbox" class="custom-control-input"' + (options.id ? ' id="' + options.id + '"' : ''),
+    '<label class="form-check-label"' + (options.id ? ' for="' + options.id + '"' : '') + '>',
+    ' <input role="checkbox" type="checkbox" class="form-check-input"' + (options.id ? ' id="' + options.id + '"' : ''),
     (options.checked ? ' checked' : ''),
     ' aria-label="' + (options.text ? options.text : '') + '"',
     ' aria-checked="' + (options.checked ? 'true' : 'false') + '"/>',
-    '<label class="custom-control-label"' + (options.id ? ' for="' + options.id + '"' : ''),
-    '">' + (options.text ? options.text : '') + '</label>'
+    ' ' + (options.text ? options.text : '') + '</label>'
   ].join(''));
 });
 
@@ -169,7 +169,7 @@ const ui = {
           title: options.tooltip,
           'aria-label': options.tooltip
         }).tooltip({
-          container: options.container,
+          container: (options.container !== undefined) ? options.container : 'body',
           trigger: 'hover',
           placement: 'bottom'
         });
